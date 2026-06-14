@@ -2,5 +2,8 @@
 
 | User | Role |
 | --- | --- |
-| **[lafisad](https://github.com/lafisad)** | owner, original creator |
-| **[txhctxhctxhc-oss](https://github.com/txhctxhctxhc-oss)** | alternate account, mostly for comitting, PRs and syncing |
+| **[lafisad][gh_link1]** | owner, original creator |
+| **[txhctxhctxhc-oss][gh_link2]** | alternate account, mostly for comitting, PRs and syncing |
+
+[gh_link1]: https://github.com/lafisad
+[gh_link2]: https://github.com/txhctxhctxhc-oss

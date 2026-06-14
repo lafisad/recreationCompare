@@ -26,6 +26,7 @@ This *should* work with any audio type that **ffmpeg** supports too.
 
 - [MIT License](LICENSE)
 - [CONTRIBUTING.md](CONTRIBUTING.md)
+- [CONTRIBUTORS.md](CONTRIBUTORS.md)
 
 # Testing
 
