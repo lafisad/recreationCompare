@@ -3,7 +3,7 @@ import shutil
 import argparse
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import stft, correlate, correlation_lags  # type: ignore
+from scipy.signal import stft, correlate, correlation_lags  # pyright: ignore[reportMissingImports]
 from subprocess import run, PIPE
 from dataclasses import dataclass
 
