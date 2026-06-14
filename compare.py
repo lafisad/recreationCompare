@@ -1,7 +1,7 @@
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.signal import stft
+from scipy.signal import stft # type: ignore
 from subprocess import run, PIPE
 from dataclasses import dataclass
 
