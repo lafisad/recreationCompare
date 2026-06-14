@@ -13,3 +13,7 @@ To use, this is the syntax:
 
 This *should* work with any audio type that **ffmpeg** supports too.
 
+### Important resources
+
+[MIT License](LICENSE)
+[CONTRIBUTING.md](CONTRIBUTING.md)
