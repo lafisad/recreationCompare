@@ -170,8 +170,8 @@ def run_tool():
     error_plot = np.mean(comparison_result.error_matrix, axis=-1) if len(comparison_result.error_matrix.shape) > 2 else comparison_result.error_matrix
     
     # --- plot ---
-    fig = plt.figure(num="Spectrogram Comparison Tool", figsize=(14, 10))
     plt.style.use("dark_background")
+    fig = plt.figure(num="Spectrogram Comparison Tool", figsize=(14, 10))
     
     ax1 = fig.add_subplot(3, 1, 1)
     ax2 = fig.add_subplot(3, 1, 2)
