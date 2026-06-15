@@ -7,7 +7,7 @@ from scipy.signal import stft, correlate, correlation_lags  # pyright: ignore[re
 from subprocess import run, PIPE
 from dataclasses import dataclass
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 
 
 @dataclass
@@ -25,19 +25,18 @@ class Result:
     time_delta: float
 
 
-def check_ffmpeg():
-    if not shutil.which("ffmpeg"):
+def check_ffmpeg(ffmpeg_exe="ffmpeg"):
+    if not shutil.which(ffmpeg_exe):
         print(
-            "Error: 'ffmpeg' executable not found on system PATH.\n"
-            "Please install FFmpeg and make sure it is accessible via the command line.",
-            file=sys.stderr
+            f"Error: '{ffmpeg_exe}' executable not found. Provide --ffmpeg-path or install FFmpeg.\n",
+            file=sys.stderr,
         )
         sys.exit(1)
 
 
-def load(path, sample_rate=48000, channels=1):
+def load(path, sample_rate=48000, channels=1, ffmpeg_exe="ffmpeg"):
     process = run(
-        ["ffmpeg", "-v", "error", "-i", path,
+        [ffmpeg_exe, "-v", "error", "-i", path,
          "-f", "f32le", "-acodec", "pcm_f32le",
          "-ac", str(channels), "-ar", str(sample_rate), "-"],
         stdout=PIPE, stderr=PIPE
@@ -111,7 +110,7 @@ def compare(spec_a, spec_b):
 
 
 def run_tool():
-    check_ffmpeg()
+
     
     parser = argparse.ArgumentParser(description="Compare original audio to a recreation.")
     parser.add_argument("original", help="Path to original audio file")
@@ -123,15 +122,25 @@ def run_tool():
     parser.add_argument("--nperseg", type=int, default=2048, help="STFT window size (default: 2048)")
     parser.add_argument("--noverlap", type=int, default=1536, help="STFT overlap size (default: 1536)")
     parser.add_argument("-o", "--output", help="Save comparison plot to this file path")
+    parser.add_argument("--ffmpeg-path", help="Path to ffmpeg executable (overrides PATH detection)")
+
     parser.add_argument("--headless", action="store_true", help="Run without opening interactive plot window")
-    
+
     args = parser.parse_args()
-    
     channels = 2 if args.stereo else 1
     
-    # Load audio
-    original_audio = load(args.original, args.sr, channels)
-    recreation_audio = load(args.recreation, args.sr, channels)
+    # Determine ffmpeg executable
+    ffmpeg_exe = args.ffmpeg_path if args.ffmpeg_path else shutil.which("ffmpeg")
+    if not ffmpeg_exe:
+        print("Error: ffmpeg executable not found. Provide --ffmpeg-path or ensure ffmpeg is on PATH.", file=sys.stderr)
+        sys.exit(1)
+    
+    # Verify ffmpeg availability
+    check_ffmpeg(ffmpeg_exe)
+    
+    # Load audio using determined ffmpeg
+    original_audio = load(args.original, args.sr, channels, ffmpeg_exe)
+    recreation_audio = load(args.recreation, args.sr, channels, ffmpeg_exe)
     
     # Auto align if requested
     if args.align:

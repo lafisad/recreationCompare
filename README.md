@@ -1,6 +1,6 @@
 # recreationCompare
 
-**current version: 0.2.0**  
+**current version: 0.2.1**  
 
 This project aims to provide a way to easily compare an original to a musical recreation.
 For this I am using **matplotlib**, **numpy**, **scipy** and **ffmpeg**.
